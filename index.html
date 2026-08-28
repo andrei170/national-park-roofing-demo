@@ -1,0 +1,344 @@
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>National Park Roofing Demo</title>
+<link href="https://fonts.googleapis.com/css2?family=Bitter:wght@600;700&family=IBM+Plex+Sans:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --ink:#14181c; --mut:#57616c; --line:#e2e6ec; --bg:#f8fafb; --panel:#fff;
+  --deep:#12283f; --deep2:#1d3b58; --acc:#2f6fbf; --acc2:#7fb4e3; --ok:#1f7a45;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+body{font-family:"IBM Plex Sans",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;color:var(--ink);background:var(--bg);line-height:1.6;-webkit-font-smoothing:antialiased}
+h1,h2,h3{font-family:Bitter,Georgia,serif;font-weight:700;line-height:1.16;letter-spacing:-.014em;text-wrap:balance}
+.wrap{max-width:1120px;margin:0 auto;padding:0 22px}
+.demobar{background:#0d1117;color:#e6edf3;font-size:12.5px;text-align:center;padding:8px 14px}
+.demobar b{color:#f0b13c}
+.urg{background:#8a1c1c;color:#fff;text-align:center;font-size:13.5px;padding:9px;font-weight:500}
+.urg a{color:#fff}
+nav{position:sticky;top:0;z-index:60;background:rgba(248,250,251,.95);backdrop-filter:blur(10px);border-bottom:1px solid var(--line)}
+.navin{display:flex;align-items:center;justify-content:space-between;gap:16px;padding:13px 0}
+.logo{font-family:Bitter,serif;font-weight:700;font-size:19px}
+.logo span{color:var(--acc)}
+.navl{display:flex;gap:20px;font-size:14.5px;font-weight:500}
+.navl a{color:var(--mut);text-decoration:none}.navl a:hover{color:var(--deep2)}
+.navl a.on{color:var(--deep2);font-weight:700}
+.call{display:inline-flex;align-items:center;gap:8px;background:var(--deep2);color:#fff;text-decoration:none;font-weight:600;font-size:14.5px;padding:10px 17px;border-radius:8px;white-space:nowrap}
+@media(max-width:900px){.navl{display:none}}
+.hero{position:relative;background:linear-gradient(155deg,var(--deep),var(--deep2));color:#eef3f8;overflow:hidden}
+.hero::after{content:"";position:absolute;inset:0;opacity:.13;
+  background:repeating-linear-gradient(78deg,transparent 0 38px,rgba(255,255,255,.55) 38px 40px),
+             repeating-linear-gradient(-12deg,transparent 0 38px,rgba(255,255,255,.3) 38px 39px)}
+.heroin{position:relative;z-index:2;display:grid;grid-template-columns:1.06fr .94fr;gap:42px;align-items:center;padding:56px 0 62px}
+@media(max-width:980px){.heroin{grid-template-columns:1fr;gap:28px;padding:38px 0 44px}}
+.eyeb{display:inline-block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;font-weight:700;color:var(--acc2);border:1px solid rgba(255,255,255,.28);padding:5px 12px;border-radius:999px;margin-bottom:17px}
+.hero h1{font-size:clamp(31px,5vw,48px);margin-bottom:14px}
+.hero h1 em{font-style:normal;color:var(--acc2)}
+.hero .lede{font-size:17px;color:#c6d3df;max-width:520px}
+.ticks{list-style:none;margin-top:20px;display:grid;gap:9px}
+.ticks li{display:flex;gap:10px;font-size:15.5px;color:#dde6ee}
+.ticks svg{flex:0 0 18px;margin-top:4px;fill:var(--acc2)}
+.form{background:var(--panel);border-radius:14px;padding:24px;box-shadow:0 20px 54px rgba(0,0,0,.3);color:var(--ink)}
+.form h3{font-size:20px;margin-bottom:4px}
+.form .fs{font-size:13.5px;color:var(--mut);margin-bottom:14px}
+label{display:block;font-size:12px;font-weight:700;letter-spacing:.05em;text-transform:uppercase;color:var(--mut);margin:12px 0 5px}
+select,input{width:100%;font-family:inherit;font-size:15px;color:var(--ink);background:#fbfcfd;border:1px solid var(--line);border-radius:8px;padding:11px 12px}
+select:focus,input:focus{outline:2px solid var(--acc);outline-offset:1px;border-color:transparent}
+.chk{display:flex;flex-wrap:wrap;gap:8px;margin-top:4px}
+.chk label{display:inline-flex;align-items:center;gap:7px;margin:0;padding:8px 12px;border:1px solid var(--line);border-radius:999px;background:#fbfcfd;font-size:13.5px;font-weight:500;letter-spacing:0;text-transform:none;color:var(--ink);cursor:pointer}
+.chk input{width:auto;padding:0;margin:0}
+.btn{width:100%;margin-top:18px;background:var(--acc);color:#fff;border:0;border-radius:9px;padding:14px;font-family:Bitter,serif;font-size:16px;font-weight:700;cursor:pointer}
+.btn:hover{filter:brightness(.88)}
+.hint{font-size:12px;color:var(--mut);margin-top:10px;text-align:center}
+.out{display:none;margin-top:15px;border-radius:10px;padding:15px 16px;font-size:14.5px;border:1px solid}
+.out.show{display:block}
+.out b{display:block;font-family:Bitter,serif;font-size:16.5px;margin-bottom:5px}
+.o-hi{background:#eef6f0;border-color:#bedcc6;color:#1d5734}
+.o-md{background:#fdf6ea;border-color:#ecdcb2;color:#775413}
+.o-lo{background:#f3f5f7;border-color:#dde2e7;color:#48515a}
+.o-urg{background:#fdeeee;border-color:#f0c6c4;color:#8a1c1c}
+.trust{background:#0e141a;color:#b6c2cd;padding:15px 0}
+.trustin{display:flex;flex-wrap:wrap;justify-content:center;gap:11px 34px;font-size:13.5px}
+.trustin b{color:var(--acc2);font-weight:700}
+section{padding:58px 0}
+.sh{text-align:center;max-width:680px;margin:0 auto 34px}
+.sh .kick{font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--acc);font-weight:700;margin-bottom:10px}
+.sh h2{font-size:clamp(25px,3.4vw,33px);margin-bottom:11px}
+.sh p{color:var(--mut);font-size:16.5px}
+.band{background:var(--panel);border-top:1px solid var(--line);border-bottom:1px solid var(--line)}
+.cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(240px,1fr));gap:17px}
+.card{background:var(--panel);border:1px solid var(--line);border-radius:13px;overflow:hidden}
+.ctop{height:100px;position:relative;background:linear-gradient(140deg,var(--deep),var(--deep2))}
+.ctop::after{content:"";position:absolute;inset:0;opacity:.24;background:repeating-linear-gradient(78deg,transparent 0 15px,rgba(255,255,255,.5) 15px 16px)}
+.cbody{padding:17px}.cbody h3{font-size:18px;margin-bottom:6px}
+.cbody p{font-size:14.5px;color:var(--mut)}
+.two{display:grid;grid-template-columns:1fr 1fr;gap:18px}
+@media(max-width:820px){.two{grid-template-columns:1fr}}
+.box{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:24px}
+.box.pri{background:linear-gradient(160deg,var(--deep),var(--deep2));color:#eef3f8;border-color:var(--deep2)}
+.box h3{font-size:20px;margin-bottom:10px}
+.box ul{margin:0 0 0 19px;font-size:15px;color:var(--mut)}
+.box.pri ul{color:#c6d3df}
+.box li{margin-bottom:8px}
+.tagp{display:inline-block;font-size:11px;letter-spacing:.11em;text-transform:uppercase;font-weight:700;background:var(--acc2);color:#0e1a26;padding:4px 10px;border-radius:999px;margin-bottom:12px}
+.facts{display:grid;grid-template-columns:repeat(auto-fit,minmax(205px,1fr));gap:16px}
+.fact{background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:20px}
+.fact .k{font-size:11.5px;letter-spacing:.13em;text-transform:uppercase;color:var(--mut);font-weight:700;margin-bottom:7px}
+.fact .v{font-family:Bitter,serif;font-size:22px;font-weight:700;color:var(--deep2)}
+.fact .n{font-size:13.5px;color:var(--mut);margin-top:5px}
+.steps{display:grid;grid-template-columns:repeat(auto-fit,minmax(215px,1fr));gap:22px;counter-reset:s}
+.step{counter-increment:s;position:relative;padding-left:50px}
+.step::before{content:counter(s);position:absolute;left:0;top:0;width:37px;height:37px;border-radius:50%;background:var(--deep2);color:#fff;font-family:Bitter,serif;font-weight:700;font-size:17px;display:grid;place-items:center}
+.step h3{font-size:17.5px;margin-bottom:5px}.step p{font-size:14.5px;color:var(--mut)}
+.revs{display:grid;grid-template-columns:repeat(auto-fit,minmax(268px,1fr));gap:17px}
+.rev{background:var(--panel);border:1px solid var(--line);border-radius:13px;padding:20px}
+.stars{color:#e0a32e;font-size:15.5px;letter-spacing:2px}
+.rev p{font-size:14.8px;color:var(--mut);margin:9px 0 12px;font-style:italic}
+.rev .who{font-size:13.5px;font-weight:700}
+.rev .who span{display:block;font-weight:400;color:var(--mut);font-size:12.5px;margin-top:2px}
+.ratebar{display:flex;align-items:center;justify-content:center;gap:14px;margin-bottom:28px;flex-wrap:wrap}
+.ratebig{font-family:Bitter,serif;font-size:42px;font-weight:700;color:var(--deep2)}
+.ratetxt{font-size:14.5px;color:var(--mut);text-align:left}
+.badges{display:flex;flex-wrap:wrap;gap:12px;justify-content:center}
+.bdg{background:var(--panel);border:1px dashed #b9c3d1;border-radius:11px;padding:14px 20px;text-align:center;min-width:140px}
+.bdg b{display:block;font-family:Bitter,serif;font-size:16px;color:var(--deep2)}
+.bdg span{font-size:11.5px;color:var(--mut);letter-spacing:.05em;text-transform:uppercase}
+.areas{display:flex;flex-wrap:wrap;gap:9px;justify-content:center;margin-top:20px}
+.areas span{background:var(--panel);border:1px solid var(--line);border-radius:999px;padding:8px 15px;font-size:14px;color:var(--mut)}
+.cta2{background:linear-gradient(155deg,var(--deep),var(--deep2));color:#eef3f8;text-align:center;padding:58px 0}
+.cta2 h2{font-size:clamp(25px,3.4vw,33px);margin-bottom:11px}
+.cta2 p{color:#c6d3df;font-size:16.5px;max-width:560px;margin:0 auto 22px}
+.cta2 .call{font-size:16px;padding:14px 26px;background:var(--acc2);color:#0e1a26}
+footer{background:#0b1016;color:#87929d;font-size:13.5px;padding:32px 0}
+.fgrid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+footer h4{color:#e7edf3;font-size:12.5px;letter-spacing:.11em;text-transform:uppercase;margin-bottom:10px}
+footer a{color:#87929d;text-decoration:none;display:block;margin-bottom:6px}
+footer a:hover{color:var(--acc2)}
+.fnote{border-top:1px solid #1b232c;padding-top:18px;margin-top:20px;font-size:12.5px;color:#6b7681;line-height:1.65}
+a:focus-visible,button:focus-visible,select:focus-visible,input:focus-visible{outline:2px solid var(--acc);outline-offset:2px}
+</style>
+<style>:root{--deep:#14201b;--deep2:#2b4438;--acc:#2f7d55;--acc2:#7fc79c}</style>
+
+<div class="demobar">CONCEPT DEMONSTRATION &mdash; built by <b>AG1 Consulting</b> for Jason Depreist &middot; not a live site &middot; ratings shown are <b>placeholders</b></div>
+<div class="urg">Storm come through? Call <a href="tel:5018817472"><b>(501) 881-7472</b></a> &mdash; free inspection before you file a claim</div>
+
+<nav><div class="wrap navin">
+  <div class="logo">National Park <span>Roofing</span></div>
+  <div class="navl"><a href="#storm">Storm &amp; Insurance</a><a href="#work">Services</a><a href="#areas">Areas</a><a href="#faq">FAQ</a></div>
+  <a class="call" href="tel:5018817472">
+    <svg width="15" height="15" viewBox="0 0 24 24" fill="currentColor"><path d="M6.6 10.8c1.4 2.8 3.8 5.1 6.6 6.6l2.2-2.2c.3-.3.7-.4 1-.2 1.2.4 2.4.6 3.6.6.6 0 1 .4 1 1V20c0 .6-.4 1-1 1C10.6 21 3 13.4 3 4c0-.6.4-1 1-1h3.5c.6 0 1 .4 1 1 0 1.3.2 2.5.6 3.6.1.4 0 .8-.2 1l-2.3 2.2z"/></svg>
+    (501) 881-7472</a>
+</div></nav>
+
+<div class="hero"><div class="wrap heroin">
+  <div>
+    <div class="eyeb">Hot Springs &middot; Arkansas &middot; Free inspections</div>
+    <h1>We handle the insurer. <em>You get the roof.</em></h1>
+    <p class="lede">Storm and hail damage inspected, documented and claimed across Hot Springs and
+    central Arkansas. All insurance companies accepted &mdash; every insurer has its own process, and
+    we know them all.</p>
+    <ul class="ticks">
+      <li><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Free inspection, photographed and written up</li>
+      <li><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> Licensed and insured</li>
+      <li><svg viewBox="0 0 24 24"><path d="M9 16.2 4.8 12l-1.4 1.4L9 19 21 7l-1.4-1.4z"/></svg> We will tell you if there is nothing claimable</li>
+    </ul>
+  </div>
+  <div class="form">
+    <h3>Book your free inspection</h3>
+    <div class="fs">Four questions &mdash; and on a live site this one would actually send.</div>
+    <form onsubmit="return q(event)">
+      <label for="issue">What is going on with the roof?</label>
+      <select id="issue" required>
+        <option value="">Choose one&hellip;</option>
+        <option value="storm">Storm or hail came through</option>
+        <option value="leak">Active leak &mdash; water coming in</option>
+        <option value="repl">Full replacement</option>
+        <option value="rep">Repair &mdash; shingles or flashing</option>
+        <option value="metal">Metal roof</option>
+        <option value="unsure">Not sure &mdash; please come and look</option>
+      </select>
+      <label for="ins">Have you spoken to your insurer?</label>
+      <select id="ins" required>
+        <option value="">Choose one&hellip;</option>
+        <option value="no">Not yet</option>
+        <option value="filed">Claim filed, waiting on the adjuster</option>
+        <option value="denied">Claim was denied or underpaid</option>
+        <option value="self">Not going through insurance</option>
+      </select>
+      <label for="prop">Property</label>
+      <select id="prop" required>
+        <option value="">Choose one&hellip;</option>
+        <option value="2">My own home</option>
+        <option value="2">A rental I own</option>
+        <option value="3">Commercial building</option>
+        <option value="3">Several properties</option>
+      </select>
+      <label for="zip">ZIP code</label>
+      <input id="zip" type="text" inputmode="numeric" placeholder="e.g. 71901" required>
+      <button class="btn" type="submit">See what happens next</button>
+      <div class="hint">Demonstration only &mdash; nothing is sent anywhere</div>
+      <div class="out" id="out"></div>
+    </form>
+  </div>
+</div></div>
+
+<div class="trust"><div class="wrap trustin">
+  <div><b>Licensed</b> &amp; insured</div><div><b>All insurers</b> accepted</div>
+  <div><b>Free</b> inspections</div><div><b>Hot Springs</b> &amp; central Arkansas</div>
+</div></div>
+
+<section id="storm"><div class="wrap">
+  <div class="sh"><div class="kick">Storm &amp; Insurance</div>
+    <h2>Most of what a claim pays for is decided before you call them.</h2>
+    <p>Once an adjuster has been out and written their number, changing it is hard. What gets found
+    and photographed <b>first</b> is what the whole thing rests on.</p></div>
+  <div class="two">
+    <div class="box pri">
+      <div class="tagp">Before you file</div>
+      <h3>Get it inspected first</h3>
+      <ul>
+        <li>Full inspection, photographed, before an adjuster is involved</li>
+        <li>Hail bruising and wind lift documented &mdash; the damage that gets walked past</li>
+        <li>A written report you can hand to your insurer</li>
+        <li>We can be there when the adjuster comes out</li>
+        <li>Every insurer has its own process &mdash; we handle the paperwork</li>
+      </ul>
+    </div>
+    <div class="box">
+      <h3>Already been turned down?</h3>
+      <ul>
+        <li>A denied or underpaid claim is worth a second inspection</li>
+        <li>We photograph and document whatever is actually up there</li>
+        <li>You keep the report either way</li>
+        <li>No pressure to do anything with it afterwards</li>
+        <li>The inspection is free regardless</li>
+      </ul>
+    </div>
+  </div>
+</div></section>
+
+<div class="band"><section id="work"><div class="wrap">
+  <div class="sh"><div class="kick">What We Do</div><h2>Every roof in central Arkansas</h2></div>
+  <div class="cards">
+    <div class="card"><div class="ctop"></div><div class="cbody"><h3>Storm &amp; Hail Damage</h3>
+      <p>Inspected, documented and claimed &mdash; Arkansas takes more hail than most people expect.</p></div></div>
+    <div class="card"><div class="ctop"></div><div class="cbody"><h3>Roof Replacement</h3>
+      <p>Full tear-off and replacement, with the underlayment and flashing details that decide how long it lasts.</p></div></div>
+    <div class="card"><div class="ctop"></div><div class="cbody"><h3>Repairs &amp; Leaks</h3>
+      <p>Active leaks and flashing failures &mdash; the repairs that stop a small problem becoming a roof.</p></div></div>
+    <div class="card"><div class="ctop"></div><div class="cbody"><h3>Metal Roofing</h3>
+      <p>Standing seam and metal systems, for homes and commercial buildings.</p></div></div>
+  </div>
+</div></section></div>
+
+<section id="faq"><div class="wrap">
+  <div class="sh"><div class="kick">Straight Answers</div><h2>The questions people actually ask</h2></div>
+  <div class="two">
+    <div class="box">
+      <h3>&ldquo;Do you work with my insurance?&rdquo;</h3>
+      <p style="font-size:15px;color:var(--mut)">All insurance companies accepted. Every insurer has
+      its own process &mdash; we know them all and handle the paperwork so you do not have to learn
+      it.</p>
+    </div>
+    <div class="box">
+      <h3>&ldquo;Are you licensed and insured?&rdquo;</h3>
+      <p style="font-size:15px;color:var(--mut)">Yes. On a live site the licence number would sit
+      here, with a link so you can check it yourself rather than take our word for it.</p>
+    </div>
+    <div class="box">
+      <h3>&ldquo;How much does a new roof cost?&rdquo;</h3>
+      <p style="font-size:15px;color:var(--mut)">It depends on size, pitch and material &mdash; which
+      is why the inspection is free and the price comes in writing afterwards, not over the phone.</p>
+    </div>
+    <div class="box">
+      <h3>&ldquo;How long does it take?&rdquo;</h3>
+      <p style="font-size:15px;color:var(--mut)">Most residential replacements are a single day on
+      site. Insurance work depends on the adjuster, and we will tell you what to expect.</p>
+    </div>
+  </div>
+</div></section>
+
+<div class="band"><section><div class="wrap">
+  <div class="sh mid"><div class="kick">Reviews</div><h2>Where your rating would sit.</h2>
+    <p>These cards are placeholders. A rating and a review count on every page does more selling in
+    roofing than any headline.</p></div>
+  <div class="ratebar">
+    <div class="ratebig">&mdash;</div>
+    <div class="ratetxt"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+    <b>placeholder</b> &mdash; your Google rating and review count would sit here</div>
+  </div>
+  <div class="revs">
+    <div class="rev"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>&ldquo;Placeholder. A real review would carry a date and a verified profile beside it.&rdquo;</p>
+      <div class="who">Placeholder <span>Example only &mdash; not a real review</span></div></div>
+    <div class="rev"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>&ldquo;Placeholder. Every roof you have finished is a review that was never asked for.&rdquo;</p>
+      <div class="who">Placeholder <span>Example only &mdash; not a real review</span></div></div>
+    <div class="rev"><div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+      <p>&ldquo;Placeholder. In roofing the count does more selling than the headline.&rdquo;</p>
+      <div class="who">Placeholder <span>Example only &mdash; not a real review</span></div></div>
+  </div>
+</div></section></div>
+
+<section id="areas"><div class="wrap">
+  <div class="sh"><div class="kick">Service Area</div><h2>Hot Springs and central Arkansas</h2>
+    <p>On a live site each of these would be its own page, so somebody searching their own town lands
+    on a page about it.</p></div>
+  <div class="areas">
+    <span>Hot Springs</span><span>Benton</span><span>Conway</span><span>Little Rock</span>
+    <span>Lake Hamilton</span><span>Bryant</span><span>Malvern</span><span>Hot Springs Village</span>
+    <span>Sheridan</span><span>Arkadelphia</span>
+  </div>
+</div></section>
+
+<div class="cta2"><div class="wrap">
+  <h2>Free inspection, no obligation</h2>
+  <p>If the roof is fine we will tell you it is fine. That costs us a visit and saves you a roof.</p>
+  <a class="call" href="tel:5018817472">Call (501) 881-7472</a>
+</div></div>
+
+<footer><div class="wrap">
+  <div class="fgrid">
+    <div><h4>National Park Roofing LLC</h4><p style="margin-bottom:8px">Hot Springs, Arkansas</p>
+      <a href="tel:5018817472">(501) 881-7472</a></div>
+    <div><h4>Services</h4><a href="#work">Storm &amp; hail</a><a href="#work">Replacement</a><a href="#work">Repairs</a><a href="#work">Metal roofing</a></div>
+    <div><h4>Insurance</h4><a href="#storm">Before you file</a><a href="#storm">Denied claims</a></div>
+    <div><h4>Areas</h4><a href="#areas">Hot Springs</a><a href="#areas">Benton</a><a href="#areas">Little Rock</a></div>
+  </div>
+  <div class="fnote">
+    <b>This is a concept demonstration built by AG1 Consulting for Jason Depreist on 28 August 2026.
+    It is not a live website and is not affiliated with or published by National Park Roofing LLC.</b>
+    The rating tile and all three review cards are <b>clearly labelled placeholders and are not real
+    reviews or ratings</b>. <b>No licence number is displayed anywhere, because none is published on
+    your current site &mdash; any you hold would be added only once evidenced.</b> Business name, phone
+    number, service list, insurance positioning, licensed and insured claims and the first five service
+    areas are taken from nationalparkroofing.com and are <b>your own published claims, not
+    independently verified</b>; the remaining areas are illustrative. <b>Nothing on this page is
+    insurance, legal or financial advice, and AG1 Consulting is not qualified to give it. No claim
+    outcome, payout, approval or reversal of a denial is promised or implied.</b> The FAQ answers are
+    illustrative of how such a page could read and are not statements of your terms. No price,
+    timescale, warranty or guarantee is offered. The inspection form is a front-end demonstration: it
+    sends nothing, stores nothing and contacts nobody.
+  </div>
+</div></footer>
+
+<script>
+function q(e){e.preventDefault();
+ var i=document.getElementById('issue').value,ins=document.getElementById('ins').value,
+     p=+document.getElementById('prop').value,zip=document.getElementById('zip').value.trim(),
+     o=document.getElementById('out');
+ var inArea=/^7(1|2)\d{3}$/.test(zip);
+ var area=inArea?'':'<br><br>That ZIP looks outside central Arkansas &mdash; we would say so honestly rather than book a visit we could not make.';
+ if(i==='leak'){o.className='out show o-urg';
+  o.innerHTML='<b>This one gets called back first.</b>Water coming in does damage every hour it stays open. In a live version this arrives as an alert with your ZIP attached &mdash; and it actually arrives, which is the point.'+area;}
+ else if(i==='storm'&&ins==='no'){o.className='out show o-hi';
+  o.innerHTML='<b>Get it looked at before you call them.</b>Once an adjuster has written their number it is hard to change &mdash; so what gets found and photographed first decides most of it. Free inspection, written up, and we can be there when they come out.'+area;}
+ else if(ins==='denied'){o.className='out show o-hi';
+  o.innerHTML='<b>Worth a second look.</b>Denied and underpaid claims are where damage gets missed. We photograph and document whatever is actually up there, and you keep the report either way.'+area;}
+ else if(p>=3){o.className='out show o-hi';
+  o.innerHTML='<b>Straight to the commercial list.</b>Commercial buildings and multiple properties get a written scope you can put out to comparison, scheduled around your tenants.'+area;}
+ else if(i==='repl'||ins==='filed'){o.className='out show o-hi';
+  o.innerHTML='<b>We would inspect this week.</b>Free, photographed, and if a repair will do instead of a replacement we will say so &mdash; even though it is the smaller job.'+area;}
+ else{o.className='out show o-md';
+  o.innerHTML='<b>Happy to come and look.</b>Nothing urgent, so it goes in the normal queue rather than the storm one. <b style="display:inline">That is the point of asking:</b> a leak and a price-check stop arriving looking identical.'+area;}
+ o.scrollIntoView({behavior:'smooth',block:'nearest'});return false;}
+</script>
